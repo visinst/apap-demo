@@ -1,0 +1,267 @@
+/* Overrides that make the archived APAP pages work as static files:
+   they replace what the original site did with JavaScript. */
+
+body {
+  font-family: "wSDGothicNeo1R", "Apple SD Gothic Neo", "나눔고딕", "Nanum Gothic", "맑은 고딕", "Malgun Gothic", dotum, sans-serif;
+}
+
+a[href="#"] { cursor: pointer; }
+
+/* Home: the big header scrolls with the page instead of staying fixed.
+   (The compact header on the catalogue page stays fixed, as on the original.) */
+.mega_header { position: absolute; }
+.mega_header .main_title_area { width: calc(100% - 280px); }
+
+/* Animated APAP logo: the gif has a transparent margin around the photo, so it
+   is enlarged and shifted to show only the photo, tinted by the yellow behind. */
+.apap_logo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.firstpage_logo_container .apap_logo img,
+.firstpage_logo_container_footer .apap_logo img {
+  position: absolute;
+  left: -10%;
+  top: -28.61%;
+  width: 120%;
+  height: 157.48%;
+  max-width: none;
+  mix-blend-mode: multiply;
+}
+
+/* Hero slideshow (replaces the original slider plugin). */
+.firstpage_image--container { background: #000; }
+.hero {
+  position: relative;
+  height: 56vw;
+  max-height: 100vh;
+  min-height: 320px;
+  overflow: hidden;
+}
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.hero__slide.is_current { opacity: 1; z-index: 1; }
+.hero__caption {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  text-align: center;
+  color: #fff;
+  border: 0;
+  text-decoration: none;
+  font-family: "SupriaSans-Heavy", "wSDGothicNeo1H", "AppleSDGothicNeo-Heavy", "Malgun Gothic", sans-serif;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+}
+.firstpage_image--container .hero__caption h3 {
+  font-size: 3.4em;
+  line-height: 1.15;
+  margin: 0 0 12px;
+  color: #fff;
+}
+.hero__caption p {
+  font-size: 1.05em;
+  line-height: 1.4;
+  white-space: pre-line;
+  margin: 0;
+  color: #fff;
+}
+.hero__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  border: 0;
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+}
+.hero__arrow--prev { left: 60px; transform: rotate(-45deg); }
+.hero__arrow--next { right: 60px; transform: rotate(135deg); }
+.hero__dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 28px;
+  z-index: 2;
+  text-align: center;
+}
+.hero__dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin: 0 4px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+}
+.hero__dot.is_current { background: #000; }
+
+/* Static picture in place of the live Google map. */
+#firstpage__map.static_map {
+  background: url("assets/map.jpg") center / cover no-repeat;
+}
+
+/* Catalogue page: book cover picture fits its column. */
+.artwork_aside img[src*="catalogue_preview"] {
+  display: block;
+  width: 100%;
+  max-width: 290px;
+  height: auto;
+}
+
+@media screen and (max-width: 767px) {
+  .hero { height: 75vw; }
+  .firstpage_image--container .hero__caption h3 { font-size: 1.8em; }
+  .hero__arrow { width: 24px; height: 24px; margin-top: -12px; }
+  .hero__arrow--prev { left: 24px; }
+  .hero__arrow--next { right: 24px; }
+}
+
+/* Catalogue page: "1. 나만의 도록 목차" list. Row styles come from the original
+   stylesheet; these add the layout the original script used to set. */
+.catalogue_section .clear_catalogue_btn {
+  border: 0;
+  color: #999;
+  font-size: 0.8em;
+}
+.catalogue_toc { margin-top: 4px; }
+.catalogue_toc__empty { display: none; }
+.catalogue_toc.is_empty { display: none; }
+.catalogue_toc.is_empty + .catalogue_toc__empty { display: block; }
+.catalogue_section .catalogue_toc ul,
+.catalogue_section .catalogue_toc li { list-style: none; padding: 0; margin: 0; }
+.catalogue_section .c-catalogue_style_list_box {
+  display: flex;
+  align-items: center;
+  min-height: 26px;
+  line-height: 1.4;
+  cursor: default;
+}
+.catalogue_section .c-catalogue_unsortable_box .c-catalogue_style_list_box { cursor: default; font-size: 1.05em; }
+.catalogue_section .c-catalogue_unsortable_box.bottom .c-catalogue_style_list_box {
+  font-family: "SupriaSans-Regular", "wSDGothicNeo1R", "Malgun Gothic", sans-serif;
+}
+.catalogue_section .toc_level_0 { padding-left: 14px; }
+.catalogue_section .toc_level_1 { padding-left: 36px; }
+.catalogue_section .toc_level_2 { padding-left: 68px; }
+.catalogue_section .reorderable { color: #bababa; margin-right: 6px; cursor: grab; touch-action: none; }
+.catalogue_section li.is_dragging { position: relative; z-index: 1; background: #fff; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); }
+.catalogue_section li.is_dragging .reorderable { cursor: grabbing; }
+.catalogue_toc.is_reordering { user-select: none; -webkit-user-select: none; }
+.catalogue_section .toggle_btn { border: 0; margin-right: 2px; }
+.catalogue_section .toggle_btn i { color: #bababa; transition: transform 0.15s; }
+.catalogue_section li.is_collapsed > div .toggle_btn i { transform: rotate(-90deg); }
+.catalogue_section li.is_collapsed > ul { display: none; }
+.catalogue_section .c-catalogue_style_list_box span.dot { float: none; flex: none; }
+.catalogue_section .toc_title { flex: 1; }
+.catalogue_section .delete_btn { order: 9; float: none; border: 0; font-size: 1.15em; color: #000; }
+
+/* Catalogue page: the right column ("2. 나만의 도록 생성하기") stays in view
+   below the fixed header while the long list scrolls. */
+@media screen and (min-width: 768px) {
+  .catalogue_aside {
+    position: sticky;
+    top: 90px;
+  }
+}
+
+/* Catalogue page: no moon icon in the header from tablet-portrait width up to
+   the width where it stops colliding with the menu. */
+@media screen and (min-width: 768px) and (max-width: 1119px) {
+  .detail_header .sun_or_moon_area { display: none; }
+}
+
+/* Inside the carousel (web.html) the page is scrolled from outside: no scrollbar. */
+html.is_embedded { scrollbar-width: none; }
+html.is_embedded::-webkit-scrollbar { display: none; }
+
+/* Home, content as in the web-1 screenshot ------------------------------- */
+
+/* Big photo: a single picture with its caption baked in. */
+.hero.hero--static {
+  display: block;
+  height: auto;
+  max-height: none;
+  min-height: 0;
+  border: 0;
+}
+.hero.hero--static img { display: block; width: 100%; height: auto; }
+
+.firstpage_highlights-wrap { padding-top: 60px; }
+.glossary_words_area li.glossary_more a { border: 0; background: none; }
+.firstpage_schedule--event_list .event_list h4 .venue { font-family: "SupriaSans-Regular", "wSDGothicNeo1R", "Malgun Gothic", sans-serif; }
+.footer_social { margin-top: 10px; font-size: 1.4em; }
+.footer_social a { border: 0; }
+
+/* "디지털 아카이브" strip above the footer. */
+.firstpage_archive { background: #fff; padding-bottom: 60px; }
+.firstpage_archive__divider {
+  height: 26px;
+  text-align: center;
+  background: url("assets/dotted_divider.png") repeat-x left center;
+}
+.firstpage_archive__divider img { background: #fff; padding: 0 8px; box-sizing: content-box; }
+.firstpage_archive__title {
+  margin: 44px 0 40px;
+  text-align: center;
+  font-family: "SupriaSans-Heavy", "wSDGothicNeo1H", "AppleSDGothicNeo-Heavy", "Malgun Gothic", sans-serif;
+  font-size: 1.1em;
+}
+.firstpage_archive__row { position: relative; max-width: 1320px; margin: 0 auto 30px; }
+.firstpage_archive__list {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  width: 920px;
+  max-width: calc(100% - 200px);
+  margin: 0 auto;
+}
+.firstpage_archive__list li { flex: 1; margin: 0; }
+.firstpage_archive__list a { border: 0; }
+.firstpage_archive__list img { display: block; width: 100%; height: auto; margin-bottom: 16px; }
+.firstpage_archive__list h4 {
+  font-family: "SupriaSans-Heavy", "wSDGothicNeo1H", "AppleSDGothicNeo-Heavy", "Malgun Gothic", sans-serif;
+  font-size: 0.85em;
+  line-height: 1.4;
+  margin: 0;
+}
+.firstpage_archive__list p { font-size: 0.85em; line-height: 1.4; margin: 0; }
+.firstpage_archive__arrow {
+  position: absolute;
+  top: 40px;
+  width: 50px;
+  height: 50px;
+  border: 0;
+  border-top: 1px solid #bbb;
+  border-left: 1px solid #bbb;
+}
+.firstpage_archive__arrow--prev { left: 70px; transform: rotate(-45deg); }
+.firstpage_archive__arrow--next { right: 70px; transform: rotate(135deg); }
+@media screen and (max-width: 767px) {
+  .firstpage_archive__list { flex-wrap: wrap; gap: 20px; max-width: calc(100% - 40px); }
+  .firstpage_archive__list li { flex: 1 1 40%; }
+  .firstpage_archive__arrow { display: none; }
+}
+.sun_or_moon_area img[src*="icon_sun"] { width: 30px; }
+.icon-twitter-bird:before { font-size: 0.8em; }
+.aside_routes .running_slogan { white-space: nowrap; letter-spacing: -0.8px; }
+.c-glossary_words_shuffed_area { display: flex; align-items: center; white-space: nowrap; }
+.c-glossary_words_shuffed_area .glossary_words_area { display: flex; }
+.c-glossary_words_shuffed_area .glossary_words_area li { margin-right: 6px; }
+.c-glossary_words_shuffed_area .glossary_words_area li a { padding-left: 7px; padding-right: 7px; letter-spacing: -0.5px; }
+.c-glossary_words_shuffed_area br.clearing { display: none; }
+@media screen and (max-width: 959px) {
+  .c-glossary_words_shuffed_area { overflow: hidden; }
+}
+.real_footer .footer_social a { border: 0; margin-right: 2px; font-size: 1.5em; }

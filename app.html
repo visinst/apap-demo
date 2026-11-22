@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>App</title>
+  <link rel="stylesheet" href="carousel.css">
+</head>
+<body>
+  <div class="carousel" id="carousel"></div>
+  <script src="carousel.js"></script>
+  <script>
+    startCarousel(document.getElementById('carousel'), [
+      {
+        src: 'assets/app-1.jpg',
+        width: 640,
+        height: 1138,
+        overlays: [
+          // Yellow patch covering the still APAP photo baked into app-1.jpg.
+          { rect: [124, 495, 394, 190], color: '#fcf58b' },
+          // Animated logo, sized so its photo area lands exactly on that patch
+          // (the gif has a transparent margin around the photo).
+          { rect: [84.6, 440.64, 472.8, 299.21], src: 'assets/logo.gif', blend: 'multiply' },
+        ],
+      },
+      'assets/app-2.jpg',
+      'assets/app-3.jpg',
+      'assets/app-4.jpg',
+    ]);
+  </script>
+</body>
+</html>

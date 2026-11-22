@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Web</title>
+  <link rel="stylesheet" href="carousel.css">
+</head>
+<body>
+  <div class="carousel" id="carousel"></div>
+  <script src="carousel.js"></script>
+  <script>
+    // The two archived pages, shown live. Autoplay scrolls each one to its
+    // end before flipping to the next.
+    startCarousel(document.getElementById('carousel'), [
+      { page: 'site/home.html' },
+      // Second page: hold at the top for a long time before scrolling down.
+      { page: 'site/catalogue.html', startMs: 10000 },
+    ], { scroll: true });
+  </script>
+</body>
+</html>
